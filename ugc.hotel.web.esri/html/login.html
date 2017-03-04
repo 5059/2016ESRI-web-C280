@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+		<meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+        <title>酒店分析系统登录界面</title>
+        <meta name="description" content="Custom Login Form Styling with CSS3" />
+        <meta name="keywords" content="css3, login, form, custom, input, submit, button, html5, placeholder" />
+        <meta name="author" content="Codrops" />
+        <link rel="shortcut icon" href="../favicon.ico"> 
+        <link rel="stylesheet" type="text/css" href="../css/style.css" />
+        <script src="../js/login/modernizr.custom.63321.js"></script>
+		<!--[if lte IE 7]><style>.main{display:none;} .support-note .note-ie{display:block;}</style><![endif]-->
+    </head>
+    <body>
+        <div class="container">
+            <header>
+                <h1>酒店竞业市场 <strong>时空可视化和分析</strong> 系统</h1>
+                <h2>基于社会感知</h2>
+                <div class="support-note">
+                    <span class="note-ie">对不起，浏览器不支持</span>
+                </div>
+            </header>
+            <section class="main">
+                <form class="form-1">
+                    <p class="field">
+                        <input id="account" type="text"  name="login" placeholder="用户名或邮箱">
+                        <i class="icon-user icon-large"></i>
+                    </p>
+                    <p class="field">
+                        <input id="password" type="password" name="password" placeholder="密码">
+                        <i class="icon-lock icon-large"></i>
+                    </p>
+                    <p class="submit">
+                        <button data-role="button" href="#" data-ajax="false" onclick="entrypage_signin_btn_click();return false;" name="submit"><i class="icon-arrow-right icon-large"></i></button>
+                    </p>
+                </form>
+            </section>
+        </div>
+    </body>
+    <script src="../lib/jquery-1.11.2.min.js"></script>
+    <script src="../js/setting.js"></script>
+    <script src="../js/login/globalconfig.js"></script>
+</html>

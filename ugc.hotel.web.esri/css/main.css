@@ -1,0 +1,130 @@
+.slideMenu{
+    position: absolute;
+    width: 48px;
+    height: 100%;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+}
+
+.slide-content {
+    position: absolute;
+    left: 48px;
+    width: 401px;
+    height: 100%;
+    border-right:1px solid #58D68D;
+    background: #ECF0F1;
+}
+
+#sentiment-table {
+    height: 300px;
+    width: 100%;
+}
+
+#word-cloud {
+    height: 200px;
+    width: 100%;
+}
+
+#review-rate {
+    height: 200px;
+    width: 100%;
+}
+
+.seamless {
+    margin: 0px;
+    border: 0px;
+}
+
+#search-box {
+    display: block;
+    position: absolute;
+    z-index: 2;
+    top: 30px;
+    right: 74px;
+    width: 300px;
+}
+
+
+#tag-box {
+    display: block;
+    position: absolute;
+    z-index: 2;
+    top: 2px;
+    left: 50px;
+    display: none;
+}
+
+.comparison-chart {
+    height: 200px;
+    width: 100%;
+    background: #ECF0F1;
+
+}
+
+.praisecontral_charts {
+    height: 200px;
+    width: 100%;
+    background: #ECF0F1;
+}
+
+
+#comparison_buttons {
+    position: fixed;
+    bottom: 0px;
+    left: 48px;
+}
+
+#parisecontrol_buttons {
+    position: fixed;
+    bottom: 0px;
+    left: 48px;
+}
+
+
+#btn_compare_roomnum {
+    width: 133px;
+}
+
+
+#customerMap {
+    height: 500px;
+}
+
+#genderPie {
+    height: 300px;
+}
+
+#hexagon_buttons {
+    position: fixed;
+    bottom: 0px;
+    left: 48px;
+}
+
+.btn-two-group {
+    width: 185px;
+}
+
+.btn-third {
+    width: 133px;
+}
+
+.btn-fourth {
+    width: 92px;
+}
+
+.btn-onehalf {
+    width: 200px;
+}
+
+#sight_buttons {
+    position: fixed;
+    bottom: 0px;
+    left: 48px;
+}
+
+#relatedChart {
+    height: 400px;
+}
+

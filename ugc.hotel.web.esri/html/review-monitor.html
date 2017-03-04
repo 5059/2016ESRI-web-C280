@@ -1,0 +1,108 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta charset="utf-8"> 
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="DreamCatcher-GIS">
+        <title>基于社会感知的酒店竞业市场时空可视化分析</title>
+        <link href="../lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="http://120.27.93.15:8080/arcgis_js_api/library/3.9/3.9/js/esri/css/esri.css">
+        <link rel="stylesheet" href="../lib/flat-ui/dist/css/flat-ui.min.css">
+        <link rel="stylesheet" href="../lib/bootstrap-datepicker/bootstrap-datepicker3.min.css">
+    </head>
+    <body>
+        <style>
+            body {padding-top: 70px;}
+            .comment-style {color:#0094ff;font-weight:bold;}
+            .price-style{color:red;font-weight:bold }
+        </style>
+        <div class="navbar  navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">酒店竞业市场分析可视化系统</a>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="index.html">主页</a></li>
+                        <li><a href="#">关于</a></li>
+                        <li><a href="#">Github</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <a id="user_name" href="#" class="dropdown-toggle" data-toggle="dropdown"><b class="caret" ></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="review-monitor.html">评论监控</a></li>
+                                <li class="divider"></li>
+                                <li><a href="quality.html">运营质检</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#"><span class="visible-sm visible-xs">Settings<span class="fui-gear"></span></span><span class="visible-md visible-lg"><span class="fui-gear"></span></span></a></li>
+                  </ul>
+                </div><!--/.nav-collapse -->
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">
+                            <div class="tile">
+                                <img src="../images/xiecheng.png" alt="携程" class="tile-image">
+                                <h3 class="tile-title">携程网</h3>
+                                <a>4.3/5分</a>&nbsp;&nbsp;&nbsp;&nbsp<a class="price-style">¥273起</a>
+                                <p>源自<a class="comment-style">9253</a>位住客点评</p>
+                                <a class="btn btn-primary btn-large btn-block" href='javascript:void(0);' onclick="reviewMonitor('携程')">查看评论</a>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">
+                            <div class="tile">
+                                <img src="../images/yilong.png" alt="艺龙" class="tile-image">
+                                <h3 class="tile-title">艺龙网</h3>
+                                <a>4.6/5分</a>&nbsp;&nbsp;&nbsp;&nbsp<a class="price-style">¥203起</a>
+                                <p>源自<a class="comment-style">6978</a>位住客点评</p>
+                                <a class="btn btn-primary btn-large btn-block" href='javascript:void(0);' onclick="reviewMonitor('艺龙')">查看评论</a>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">
+                            <div class="tile">
+                                <img src="../images/tuniu.png" alt="途牛" class="tile-image">
+                                <h3 class="tile-title">途牛网</h3>
+                                <a>4.3/5分</a>&nbsp;&nbsp;&nbsp;&nbsp<a class="price-style">¥232起</a>
+                                <p>源自<a class="comment-style">357</a>位住客点评</p>
+                                <a class="btn btn-primary btn-large btn-block" href='javascript:void(0);' onclick="reviewMonitor('途牛')">查看评论</a>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">
+                            <div class="tile">
+                                <img src="../images/qunar.png" alt="去哪儿" class="tile-image">
+                                <h3 class="tile-title">去哪儿网</h3>
+                                <a>4.0/5分</a>&nbsp;&nbsp;&nbsp;&nbsp<a class="price-style">¥246起</a>
+                                <p>源自<a class="comment-style">2372</a>位住客点评</p>
+                                <a class="btn btn-primary btn-large btn-block" href='javascript:void(0);' onclick="reviewMonitor('去哪儿')">查看评论</a>
+                            </div>
+                        </div>
+                    </div> <!-- /row -->
+                </div>
+            </div> <!-- /row -->
+            <div class="row">
+                <div class="row">
+                    <ul class="list-group" id="comment_list">
+                    </ul>
+                </div>
+                <div class="row">
+                    <ul class="pagination" id="page_list">
+                    </ul>
+                </div>
+            </div>
+        </div> <!-- /container -->
+    </body>
+    <script src="../lib/jquery-1.11.2.min.js"></script>
+    <script src="../lib/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../js/setting.js"></script>
+    <script src="../js/review-monitor/main.js"></script>
+</html>

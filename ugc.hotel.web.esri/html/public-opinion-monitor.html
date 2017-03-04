@@ -1,0 +1,94 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta charset="utf-8"> 
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="DreamCatcher-GIS">
+        <title>基于社会感知的酒店竞业市场时空可视化分析</title>
+        <link href="../lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="http://120.27.93.15:8080/arcgis_js_api/library/3.9/3.9/js/esri/css/esri.css">
+        <link rel="stylesheet" href="../lib/flat-ui/dist/css/flat-ui.min.css">
+        <link rel="stylesheet" href="../lib/bootstrap-datepicker/bootstrap-datepicker3.min.css">
+    </head>
+    <body>
+        <style>
+      body {
+        padding-top: 70px;
+      }
+    </style>
+        <div class="navbar  navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">酒店竞业市场分析可视化系统</a>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="index.html">主页</a></li>
+                        <li><a href="#">关于</a></li>
+                        <li><a href="#">Github</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown"  class="active">
+                            <a id="user_name" href="#" class="dropdown-toggle" data-toggle="dropdown"><b class="caret" ></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="review-monitor.html">实时评论</a></li>
+                                <li class="divider"></li>
+                                <li><a href="quality-testing.html">运营质检</a></li>
+                                <li class="divider"></li>
+                                <li><a href="public-opinion-monitor.html">舆评监控</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="setting.html"><span class="visible-sm visible-xs">Settings<span class="fui-gear"></span></span><span class="visible-md visible-lg"><span class="fui-gear"></span></span></a></li>
+                    </ul>
+                </div><!--/.nav-collapse -->
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">
+                            <div class="tile">
+                                <img src="../images/xiecheng.png" alt="携程" class="tile-image">
+                                <h3 class="tile-title">携程网</h3>
+                                <p>100% convertable to HTML/CSS layout.</p>
+                                <a class="btn btn-primary btn-large btn-block" href="#">查看评论</a>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">
+                            <div class="tile">
+                                <img src="../images/yilong.png" alt="艺龙" class="tile-image">
+                                <h3 class="tile-title">艺龙网</h3>
+                                <p>Vector-based shapes and minimum of layer styles.</p>
+                                <a class="btn btn-primary btn-large btn-block" href="#">查看评论</a>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">
+                            <div class="tile">
+                                <img src="../images/tuniu.png" alt="途牛" class="tile-image">
+                                <h3 class="tile-title">途牛网</h3>
+                                <p>Easy to add or change elements. </p>
+                                <a class="btn btn-primary btn-large btn-block" href="#">查看评论</a>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">
+                            <div class="tile">
+                                <img src="../images/qunar.png" alt="去哪儿" class="tile-image">
+                                <h3 class="tile-title">去哪儿网</h3>
+                                <p>Your likes, shares and comments helps us.</p>
+                                <a class="btn btn-primary btn-large btn-block" href="#">查看评论</a>
+                            </div>
+                        </div>
+                    </div> <!-- /row -->
+                </div>
+            </div> <!-- /row -->
+            <div class="row">
+            </div>
+        </div> <!-- /container -->
+    </body>
+</html>

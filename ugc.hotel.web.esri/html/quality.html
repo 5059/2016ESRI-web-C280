@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="DreamCatcher-GIS">
+    <title>基于社会感知的酒店竞业市场时空可视化分析</title>
+
+    <link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.min.css" >
+    <link rel="stylesheet" href="../lib/flat-ui/dist/css/flat-ui.min.css">
+    <link rel="stylesheet" href="../css/loading.css">
+    <link rel="stylesheet" href="../css/messages.css"/>
+    <link rel="stylesheet" href="http://localhost/arcgisjs40/library/4.0/4.0/esri/css/main.css">
+</head>
+<body>
+<style type="text/css">body {padding-top:70px;}</style>
+
+<div class="navbar  navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">酒店竞业市场分析可视化系统</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="index.html">主页</a></li>
+                <li><a href="#">关于</a></li>
+                <li><a href="#">Github</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown"  class="active">
+                    <a id="user_name" href="#" class="dropdown-toggle" data-toggle="dropdown"><b class="caret" ></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="review-monitor.html">实时评论</a></li>
+                        <li class="divider"></li>
+                        <li><a href="quality.html">运营质检</a></li>
+                        <!--<li class="divider"></li>
+                        <li><a href="public-opinion-monitor.html">舆评监控</a></li>-->
+                    </ul>
+                </li>
+                <li><a href="setting.html"><span class="visible-sm visible-xs">Settings<span class="fui-gear"></span></span><span class="visible-md visible-lg"><span class="fui-gear"></span></span></a></li>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</div>
+
+<!--我是左侧-->
+<div class="map-div">
+    <!--加载的进度条-->
+    <div class="col-md-12" id="loadinger">
+        <div class="loader">
+            <div class="loading-1"></div>
+            <div class="loading-2">Loading....</div>
+        </div>
+    </div>
+
+    <a class="floor-info" id="floornum"></a>
+    <div class="query-info">
+        <select id="selectPoint" data-toggle="select" multiple class="form-control multiselect multiselect-primary mrs mbm"></select>
+        <button id="queryPointBtn" class="btn btn-primary btn-lg" data-toggle="modal">Go!</button>
+    </div>
+
+    <div class="legend-info" >
+        <!--图例-->
+        <button class="btn btn-default">维修中</button>
+        <button class="btn btn-primary">正常</button>
+        <button class="btn btn-warning">警告</button>
+        <button class="btn btn-danger">危险</button>
+        <!--<div class="legend-red">危险</div>
+        <div class="legend-yellow">警告</div>
+        <div class="legend-green">正常</div>
+        <div class="legend-gray">缺失</div>-->
+    </div>
+
+    <nav >
+        <div class="button-one" id= "upmap">
+            <img src="../images/up1.png" class="button-img">
+        </div>
+        <div class="button-two" id="refreshmap">
+            <img src="../images/menu.png" class="button-img">
+        </div>
+        <div class="button-three" id="downmap">
+            <img src="../images/down.png" class="button-img">
+        </div>
+    </nav>
+    <div id="floormap"></div>
+</div>
+
+<!--我是右侧-->
+<div class="right">
+    <div class="right-top">
+        <div class="right-top-title">Room Message List</div>
+        <div class="right-mess" id="roomlist">
+
+        <!--房间信息展示测试 -->
+        <!--<div class="right-list-div" >
+            <a class="list-roomnum">0401号房</a>
+            <a class="button-danger">普通单人</a>
+        </div>-->
+
+        </div>
+    </div>
+    <!--<div class="right-bottom">时间轴：</div>-->
+</div>
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="remarktitle" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="remarktitle">
+                    RoomNumber
+                </h4>
+            </div>
+            <div class="modal-body" id="remarkbody">
+                <ul id="remarkList">
+
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+<!--<script type="text/javascript" src="../js/jquery-1.7.2.js"></script>
+<script type="text/javascript" src="../lib/jquery-1.11.2.min.js"></script>-->
+<script type="text/javascript" src="../js/jquery-2.1.1-min.js"></script>
+<!--<script type="text/javascript" src="../lib/flat-ui/dist/js/vendor/jquery.min.js"></script>-->
+
+<script type="text/javascript" src="../lib/flat-ui/dist/js/flat-ui.min.js"></script>
+<script type="text/javascript" src="../lib/bootstrap/js/bootstrap.min.js"></script>
+
+<script type="text/javascript" src="../js/application.js"></script>
+<script type="text/javascript" src="../lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="http://localhost/arcgisjs40/library/4.0/4.0/init.js"></script>
+
+<script src="../js/setting.js"></script>
+<script src="../js/floormap.js"></script>
+
+</body>
+</html>

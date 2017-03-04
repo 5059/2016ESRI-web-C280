@@ -1,0 +1,541 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"> 
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="DreamCatcher-GIS">
+        <title>基于社会感知的酒店竞业市场时空可视化分析</title>
+        <link href="../lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="http://120.27.93.15:8080/arcgis_js_api/library/3.9/3.9/js/esri/css/esri.css">
+        <link rel="stylesheet" href="../css/simple-sidebar.css">
+        <link rel="stylesheet" href="../lib/flat-ui/dist/css/flat-ui.min.css">
+        <link rel="stylesheet" href="../lib/bootstrap-datepicker/bootstrap-datepicker3.min.css">
+        <link rel="stylesheet" href="../css/main.css">
+    </head>
+    <body>
+        <nav id="navbar" class="navbar navbar-inverse navbar-embossed" role="navigation" style="margin: 0px;">
+            <div class="nav navbar-nav navbar-left">
+                <ul class="nav navbar-nav navbar-left">
+                    <li>
+                        <a href="#" id="menu-toggle" class="btn btn-primary"><i class="fui-list-columned"></i></a>
+                    </li>
+                </ul>
+            </div>
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">酒店竞业市场分析可视化系统</a>
+                </div>
+                <div class="navbar-collapse collapse">
+                  <ul class="nav navbar-nav">
+                    <li class="active"><a href="index.html">主页</a></li>
+                    <li><a href="#">关于</a></li>
+                    <li><a href="https://github.com/Dreamcatcher-GIS/ugc.hotel.web">Github</a></li>
+                  </ul>
+                  <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                      <a id="user_name" href="#" class="dropdown-toggle" data-toggle="dropdown"><b class="caret" ></b></a>
+                      <ul class="dropdown-menu">
+                          <li><a href="review-monitor.html">评论监控</a></li>
+                          <li class="divider"></li>
+                          <li><a href="quality.html">运营质检</a></li>
+                      </ul>
+                    </li>
+                    <li><a href="#"><span class="visible-sm visible-xs">Settings<span class="fui-gear"></span></span><span class="visible-md visible-lg"><span class="fui-gear"></span></span></a></li>
+                  </ul>
+                </div><!--/.nav-collapse -->
+
+<!--                <div class="navbar-collapse collapse" id="navbar-collapse-9">
+                    <form class="navbar-form navbar-right" role="form">
+                        <div class="form-group">
+                            <input type="text" placeholder="邮箱" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" placeholder="密码" class="form-control">
+                        </div>
+                        <button type="submit" class="btn btn-success" >登录</button>
+                        <button type="submit" class="btn btn-danger">注册</button>
+                    </form>
+                </div>-->
+            </div>
+        </nav>
+        <div id="wrapper">
+            <!-- Sidebar -->
+            <div id="sidebar-wrapper">
+                <!-- 侧边栏 -->
+                <div class="slideMenu">
+                    <ul class="nav nav-tabs nav-stacked" id="slideMenu">
+                        <li  class="active seamless">
+                            <a href="#marketing"  data-toggle="tab" class="btn btn-success" title="竞业分析" style="border: 0px;margin: 0px;">
+                                <i class="fui-list-columned"></i>
+                            </a>
+                        </li>
+                        <li class="seamless">
+                            <a href="#profit"  data-toggle="tab" class="btn btn-success" title="酒店对比" style="border: 0px;margin: 0px;">
+                                <i class="fui-list-numbered"></i>
+                            </a>
+                        </li>
+                        <li class="seamless">
+                            <a href="#competition"  data-toggle="tab" class="btn btn-success"title="城市市场分析"  style="border: 0px;margin: 0px;">
+                                <i class="fui-list-small-thumbnails"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- 侧边栏内容 -->
+                <div class="slide-content tab-content">
+                    <!-- 功能栏一 营销辅助 -->
+                    <div class="tab-pane fade in active" id="marketing">
+                        <ul id="marketing-tab" class="nav nav-tabs" role="tablist" id="marketing_menu">
+                            <li class="active"><a href="#hotel-sentiment" data-toggle="tab">基本信息</a></li>
+                            <li><a href="#customer-map" data-toggle="tab">潜在竞争分析</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <!-- 基本信息 -->
+                            <div class="tab-pane fade in active" id="hotel-sentiment">
+                                <div id="sentiment-table"></div>
+                                <div id="word-cloud"></div>
+                                <div id="review-rate"></div>
+                            </div>
+                            <!-- 客源地图 -->
+                            <div class="tab-pane fade" id="customer-map">
+                                <div class="form-group" style="padding-left:30px;">
+                                    <div class="row">
+                                        <h6>用户轨迹加载</h6>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-primary" id="btn_openUserTraceModal">打开加载窗口</button>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <h6>约束区域绘制</h6>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-primary btn-lg btn-fourth" id="btn_drawCircle">圆</button>
+                                            <button type="button" class="btn btn-primary btn-lg btn-fourth" id="btn_drawRectangle">矩形</button>
+                                            <button type="button" class="btn btn-primary btn-lg btn-fourth" id="btn_drawPolygon">多边形</button>
+                                            <button type="button" class="btn btn-primary btn-lg btn-fourth" id="btn_clearDraw">清除</button>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <h6>竞争分析计算</h6>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-primary btn-lg btn-two-group" id="btn_customFlowAnalysis">客源流出计算</button>
+                                            <button type="button" class="btn btn-primary btn-lg btn-two-group" id="btn_serviceAnalysis">酒店服务分析</button>
+                                        </div>
+                                    </div>
+                                    <!--<div class="row">
+                                            <div class="input-group">
+                                                <label for="input_buffer">输入距离:</label>
+                                                <input type="text" class="form-control" id ="input_buffer">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-primary" id="btn_generateBuffer">生成查询范围</button>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="input-group input-daterange">
+                                                <div class="input-group">
+                                                    <label for="input_originDate">起始时间:</label>
+                                                    <input type="text" class="form-control" id ="input_originDate">
+                                                </div> 
+                                                <div class="input-group">
+                                                    <label for="input_endDate">结束时间:</label>
+                                                    <input type="text" class="form-control" id ="input_endDate">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-primary btn-lg" id="btn_openCustomerModel">确定查询</button>
+                                            </div>
+                                        </div>-->
+                                </div>
+                            </div>
+                            
+                            
+                        </div>
+                    </div>
+                    <!-- 功能栏二 收益管理-->
+                    <div class="tab-pane fade" id="profit">
+                        <ul id="profit-tab" class="nav nav-tabs" role="tablist" id="profit_menu">
+                            <li class="active"><a href="#hotel-comparison" data-toggle="tab">酒店对比</a></li>
+                            <li><a href="#hotel-praisecontrol" data-toggle="tab">价格监控</a></li>
+                            <li><a href="#history-trend" data-toggle="tab">历史趋势</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <!-- 酒店对比 -->
+                            <div class="tab-pane fade in active" id="hotel-comparison">
+                                <div id="comparison_charts">
+                                </div>
+
+                                <p>
+                                    <div id="comparison_buttons" class="btn-group">
+                                        <button type="button" class="btn btn-primary btn-lg btn-onehalf" id="btn_compare">确定查询</button>
+                                        <button type="button" class="btn btn-primary btn-lg btn-onehalf" id="btn_clearSelected">清除选中</button>
+                                    </div>
+                                </p>
+                            </div>
+                            <!-- 价格监控 -->
+                            <div class="tab-pane fade" id="hotel-praisecontrol">
+                                <div id="praisecontral_charts">
+                                </div>
+                                <p>
+                                    <div id="parisecontrol_buttons" class="btn-group">
+                                        <button type="button" class="btn btn-primary btn-lg btn-onehalf" id="btn_compare_parisecontrol">确定查询</button>
+                                        <button type="button" class="btn btn-primary btn-lg btn-onehalf" id="btn_clearSelected_praisecontrol">清除选中</button>
+                                    </div>
+                                </p>
+                            </div>
+                            <!-- 历史趋势 -->
+                            <div class="tab-pane fade" id="history-trend">
+                                <div class="comparison-chart" id="trendChart">
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <!-- 功能栏三 竞业分析-->
+                    <div class="tab-pane fade" id="competition">
+                        <ul class="nav nav-tabs" role="tablist" id="competition_menu">
+                            <li class="active"><a href="#book-map" data-toggle="tab">订房热度</a></li>
+                            <li><a href="#service-cover" data-toggle="tab">服务覆盖</a></li>
+                            <li><a href="#sight-map" data-toggle="tab">景点关联</a></li>
+                            <!--<li><a href="#city-sentiment" data-toggle="tab">城市情感</a></li>-->
+                        </ul>
+                        <div class="tab-content">
+                            <!-- 订房热度 -->
+                            <div class="tab-pane fade in active" id="book-map">
+                                <div class="form-group"  style="padding-left:30px;">
+                                    <p>
+                                        <div class="input-group">
+                                            <label for="input_distant">输入查询距离:</label>
+                                            <input type="text" class="form-control" id ="input_distant">
+                                        </div><!-- /input-group -->
+                                    </p>
+                                    <p>
+                                        <div class="btn-group" id="hexagon_buttons">
+                                            <button type="button" class="btn btn-primary btn-lg btn-third" id="btn_drawTargetArea">绘制查询区域</button>
+                                            <button type="button" class="btn btn-primary btn-lg btn-third" id="btn_hexagon">确定查询</button>
+                                            <button type="button" class="btn btn-primary btn-lg btn-third" id="btn_clearHexagon">清除图层</button>
+                                        </div>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="service-cover">
+                                <div style="width: 33%; float: left;height: 46px"><button type="button" class="btn btn-info" id="linjinfenxi" style="width: 100%;height: 100%">邻近设施</button></div>
+                                <div style="width: 33%; float: left;height: 46px"><button type="button" class="btn btn-info" id="zuiyuansheshi" style="width: 100%;height: 100%">最远设施</button></div>
+                                <div style="width: 33%; float: left;height: 46px"><button type="button" class="btn btn-info" id="qingchutuceng" style="width: 100%;height: 100%">清除图层</button></div>
+                                <div style="clear:both;"></div>
+                                <div id="zhoubiansheshi" style="height:300px"></div>
+                                <div id="zuiyuanjvli" style="height:300px"></div>
+                            </div>
+                            <div class="tab-pane fade" id="sight-map">
+                                <p>
+                                    <div class="input-group input-daterange"  style="padding-left:30px;">
+                                        <div class="input-group">
+                                            <label for="input_startTime">起始时间:</label>
+                                            <input type="text" class="form-control" id ="input_startTime">
+                                        </div> <!-- /input-group -->
+                                        <div class="input-group">
+                                            <label for="input_endTime">结束时间:</label>
+                                            <input type="text" class="form-control" id ="input_endTime">
+                                        </div>
+                                    </div>
+                                </p>
+                                <p>
+                                    <div class="btn-group" style="padding-left:30px;">
+                                        <button type="button" class="btn btn-success" id="btn_drawConstrainArea">约束区域绘制</button>
+                                    </div>
+                                </p>
+                                <p>
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-success btn-lg btn-third" id="btn_addWeiboTrace">微博轨迹</button>
+                                        <button type="button" class="btn btn-success btn-lg btn-third" id="btn_addXieChengTrace">携程轨迹</button>
+                                        <button type="button" class="btn btn-success btn-lg btn-third" id="btn_addTuniuTrace">途牛轨迹</button>
+                                    </div>
+                                </p>
+                                
+                                <p>
+                                    <div class="btn-group" id="sight_buttons">
+                                        <button type="button" class="btn btn-primary btn-lg btn-onehalf" id="btn_relatedAnalysis">分析关联</button>
+                                        <button type="button" class="btn btn-primary btn-lg btn-onehalf" id="btn_clearHexagon">清除图层</button>
+                                    </div>
+                                </p>
+                            </div>
+                            <div class="tab-pane fade" id="city-sentiment">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /#sidebar-wrapper -->
+
+            <!-- Page Content -->
+            <div id="page-content-wrapper" style="padding: 0px;">
+                <div class="container-fluid">
+                    <div class="row"  id="fullHeight">
+                        <div class="col-lg-12"  style="height: 100%;padding: 0px;">
+                            <div id="search-box">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default" type="button">Go!</button>
+                                        </span>
+                                    </div><!-- /input-group -->
+                                </div><!-- /.form-group -->
+                            </div>
+                            <div class="form-group col-lg-6" id="tag-box">
+                                <div class="input-group tagsinput-primary">
+                                    <input name="tagsinput-01" id ="taginput" data-role="tagsinput" class="tagsinput typeahead-only " value="" />
+                                </div><!-- /input-group -->
+                            </div>
+                            <div id="map" style="height: 100%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 评论模态框（Modal） -->
+            <div class="modal fade" id="commentModal" tabindex="-1" role="dialog" 
+                 aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"  aria-hidden="false"></button>
+                            <h4 class="modal-title" id="commentModalLabel">
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <ul class="list-group" id="comment_list">
+                            </ul>
+                        </div>
+                        <div class="modal-footer">
+                            <ul class="pagination" id="page_list">
+                            </ul>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+            <!-- 用户轨迹模态框（Modal） -->
+            <div class="modal fade" id="userTraceModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <h6>轨迹数据选择</h6>
+                                        <form action="#" type="get">
+                                            <select id="OTASelect" data-toggle="select" class="form-control select select-success mrs mbm">
+                                                <option value="微博">微博</option>
+                                                <option value="携程">携程</option>
+                                                <option value="途牛">途牛</option>
+                                                <option value="艺龙">艺龙</option>
+                                                <option value="去哪儿">去哪儿</option>
+                                                <option value="全部">全部</option>
+                                            </select>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <h6>选择查询时间范围</h6>
+                                        <div class="input-group input-daterange">
+                                            <div class="input-group">
+                                                <label for="input_originDate">起始时间:</label>
+                                                <input type="text" class="form-control" id ="input_originDate">
+                                            </div> 
+                                            <div class="input-group">
+                                                <label for="input_endDate">结束时间:</label>
+                                                <input type="text" class="form-control" id ="input_endDate">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <a id="btn_openCustomerModel" href="#" class="btn btn-success">预览轨迹</a>  
+                            <a id="btn_loadTrace" href="#" class="btn btn-success">加载轨迹到地图</a> 
+                            <a href="#" class="btn" data-dismiss="modal">关闭</a> 
+                        </div> 
+                    </div>
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+            <div class="modal fade" id="contestHotelModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <table class="table table-striped">
+                                <caption>客源流出酒店</caption>
+                                <thead>
+                                    <tr>
+                                        <th>酒店名</th>
+                                        <th>流出数</th>
+                                        <th>价格</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="flow_to_table">
+                                </tbody>
+                            </table>
+                            <nav>  
+                                <ul class="pagination pagination-sm">  
+                                    <li class="disabled">  
+                                        <a href="#" aria-label="Previous">  
+                                            <span aria-hidden="true">«</span>  
+                                        </a>  
+                                    </li>  
+                                    <li class="active"><a href="#">1</a></li>  
+                                    <li><a href="#">2</a></li>  
+                                    <li><a href="#">3</a></li>  
+                                    <li><a href="#">4</a></li>  
+                                    <li><a href="#">5</a></li>  
+                                    <li>  
+                                        <a href="#" aria-label="Next">  
+                                            <span aria-hidden="true">»</span>  
+                                        </a>  
+                                    </li>  
+                                </ul>
+                            </nav>
+                        </div>
+                        <div class="modal-footer">
+                            <a id="btn_openBreakSettingModal" href="#" class="btn btn-success">下一步</a>  
+                        </div> 
+                    </div>
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+            <!-- 服务区步长设置模态框（Modal） -->
+            <div class="modal fade" id="breakSettingModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"  aria-hidden="false"></button>
+                            <h6 class="modal-title" id="commentModalLabel">服务区步长设置
+                            </h6>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" value="500">
+                                    </div><!-- /.form-group -->
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" value="1000" placeholder="1000">
+                                    </div><!-- /.form-group -->
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" value="2000" placeholder="2000">
+                                    </div><!-- /.form-group -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <a id="btn_generateServiceArea" href="#" class="btn btn-success">生成酒店服务区</a>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+            <!-- 客源地图模态框（Modal） -->
+            <div class="modal fade" id="mapModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog" id="customer_dialog">
+                    
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+            <!-- 订房热度模态框（Modal） -->
+            <div class="modal fade" id="bookMapModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="progress"><div id="bookProgressBar" class="progress-bar" style="width: 5%;"></div></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+            <!-- 关联分析模态框（Modal） -->
+            <div class="modal fade" id="relatedAnalysisModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog" id="customer_dialog">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div id='relatedChart'></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+        </div>
+    </body>
+</html>
+<script type="text/javascript" src="../lib/jquery-1.11.2.min.js"></script>
+<!--<script type="text/javascript" src="../lib/bootstrap/js/bootstrap.min.js"></script>-->
+<script type="text/javascript" src="../lib/flat-ui/dist/js/flat-ui.min.js"></script>
+<script type="text/javascript" src="../lib/BootSideMenu.js"></script>
+<script type="text/javascript" src="../js/dojiconfig.js"></script>
+<script type="text/javascript" src="../lib/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+<script type="text/javascript" src="../lib/bootstrap-datepicker/bootstrap-datepicker.zh-CN.js"></script>
+<script type="text/javascript" src="http://120.27.93.15:8080/arcgis_js_api/library/3.9/3.9/init.js"></script>
+<script type="text/javascript" src="../lib/tmpl.js"></script>
+<script type="text/javascript" src="../lib/echarts.js"></script>
+<script type="text/javascript" src="../js/common.js"></script>
+<script type="text/javascript" src="../js/setting.js"></script>
+<script type="text/javascript" src="../js/index/options.js"></script>
+<script type="text/javascript" src="../lib/typeahead.js/dist/bloodhound.js"></script>
+<script type="text/javascript" src="../js/taginput.js"></script>
+<script type="text/javascript" src="../js/index/main.js"></script>
+<script type="text/html" id="comparison_temp">
+    <div class="comparison-chart" id="<%=hotel_name%>">
+    </div>
+</script>
+<script type="text/html" id="customerProgress_temp">
+    <div class="modal-content">
+        <div class="modal-body">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12" id="cusMap_container">
+                        <div class="progress"><div id="cusProgressBar" class="progress-bar" style="width: 5%;"></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!-- /.modal-content -->
+</script>
+<script type="text/html" id="customerMap_temp">
+    <div class="modal-content">
+        <div class="modal-body">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12" id="cusMap_container">
+                        <div id='customerMap'></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="btn-group">
+                <button type="button" class="btn btn-primary btn-lg" id="btn_customerMap">客源地图</button>
+                <button type="button" class="btn btn-primary btn-lg" id="btn_customerInfo">客源信息</button>
+                <button type="button" class="btn btn-primary btn-lg" id="btn_customerTrace">客源轨迹</button>
+            </div>
+        </div>
+    </div>
+</script>
+<script type="text/html" id="praisecontrol_temp">
+    <div class="praisecontral_charts" id="<%=hotel_name_praisecontrol%>">
+    </div>
+</script>
