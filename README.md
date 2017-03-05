@@ -83,11 +83,11 @@
 <br />
 **5.4城市市场分析**<br />
 分析城市空间结构、景点关联等情况，为酒店提供行面向城市、商圈、酒店群的特征可视化。该模块功能如下：①订房热度，该功能依赖于ArcGIS Server中发布的GP服务，模型流程为：利用渔网工具生成渔网点，据此使用泰森多边形工具生成蜂窝六边形，然后通过点和面的叠置分析获悉城市订房热度分布情况，借此商家可以了解城市的订房变化情况。②服务覆盖分析，本功能基于酒店发布在各大OTA上的详细信息，通过网页爬取，文本抽取的方式，获取到酒店信息发布者对周边设施的主观认知，通过地理编码服务进行分析，从而绘制得到酒店发布者主观认知下的酒店与周边设施OD网络，据此分析酒店最远周边设施，绘制最远设施服务覆盖。③景点关联分析，通过该功能可以查看客源轨迹分布情况，同时可以分析其与景点的关联从而发现该酒店与景点的关联情况。<br />
-[Alt text](https://github.com/18010927657/ESRI2016-C280/raw/master/Screenshots/2.3订房蜂窝热度图.png)<br />
+![Alt text](https://github.com/18010927657/ESRI2016-C280/raw/master/Screenshots/2.3订房蜂窝热度图.png)<br />
 图16 订房蜂窝热度图<br />
-[Alt text](https://github.com/18010927657/ESRI2016-C280/raw/master/Screenshots/3.2.2.png)<br />
+![Alt text](https://github.com/18010927657/ESRI2016-C280/raw/master/Screenshots/3.2.2.png)<br />
 图17 景点关联图<br />
-[Alt text](https://github.com/18010927657/ESRI2016-C280/raw/master/Screenshots/3.1.2设施最远覆盖图.jpg)<br />
+![Alt text](https://github.com/18010927657/ESRI2016-C280/raw/master/Screenshots/3.1.2设施最远覆盖图.jpg)<br />
 图18 设施最远覆盖图<br />
 
 
